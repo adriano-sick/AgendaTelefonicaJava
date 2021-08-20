@@ -1,12 +1,13 @@
 //Adriano Siqueira - 8-19-21 - Agenda Telefônica
 
-//biblioteca que contém o metodo usado para coletar input
+//biblioteca com os metodos de escrita e leitura, usadas aqui nas interações com o txt
 import java.io.*;
+//biblioteca que contém o metodo usado para coletar input
 import java.util.Scanner;
 
 public class AgendaTelefonica {
 
-    //esse metodo inicia o programa
+    //esse metodo inicia o programa, por padrão
     public static void  main (String [] args) throws IOException {
         System.out.println("\n" +
                 "  ______                                   __                 ________              __          \n" +
@@ -42,7 +43,7 @@ public class AgendaTelefonica {
         //le Input do usuario
         int menuOpt = scan.nextInt();
 
-        //A sequencia de condicionais abaixo, verifica se o valor inserido é uma opção, e executa a ação relacionada
+        //A sequência de condicionais abaixo, verifica se o valor inserido é uma opção, e executa a ação relacionada
         if (menuOpt == 1) {
             BuscaContato ();
         }
@@ -56,7 +57,7 @@ public class AgendaTelefonica {
         }
     }
 
-    //esse método cria e armazena contatos em um arquivo txt
+    //esse método cria e armazena contatos num arquivo txt
     public static void CriaContato() throws IOException {
 
         Scanner scan = new Scanner(System.in);
@@ -65,12 +66,11 @@ public class AgendaTelefonica {
         PrintWriter gravarArq = new PrintWriter(arq);
 
         System.out.println("Insira o nome: ");
-        String novo = scan.next();
-        novo = novo.toUpperCase();
+        var novo = scan.next();
         gravarArq.println(novo);
 
         System.out.println("Insira o numero: ");
-        String novoNum = scan.next();
+        var novoNum = scan.next();
         gravarArq.println(novoNum);
 
         arq.close();
@@ -78,7 +78,7 @@ public class AgendaTelefonica {
         System.out.println("O contato " + novo + ", com o número " + novoNum + " foi salvo com sucesso!!");
     }
 
-    //Esse método busca um contato pelo slot, e exibe o contato
+    //Esse método busca um contato pelo nome, e exibe o contato
     public static void BuscaContato () throws IOException {
         FileReader arq;
         Scanner scan = new Scanner(System.in);
@@ -86,16 +86,15 @@ public class AgendaTelefonica {
         var num = "";
 
         System.out.println("Digite o nome do contato: ");
-        String busca = scan.nextLine();
-        busca = busca.toUpperCase();
+        var busca = scan.nextLine();
 
         try {
             arq = new FileReader("e:\\lista.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
-            while (!busca.intern().equals(nome.intern())) {
+            while (!busca.intern().equalsIgnoreCase(nome.intern())) {
                 nome = lerArq.readLine(); // lê até a linha especificada
-                num = lerArq.readLine(); // lê a linha seguinte, que na ordem, corresponde ao numero.
+                num = lerArq.readLine(); // lê a linha seguinte, que na ordem, corresponde ao número
                 if (nome == null) {
                     System.out.println("Não existe contato salvo com esse nome.");
                     break;
@@ -109,6 +108,7 @@ public class AgendaTelefonica {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            System.out.println("Viiish, deu ruim aqui, Jão...");
         }
     }
 }
