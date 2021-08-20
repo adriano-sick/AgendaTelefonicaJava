@@ -6,8 +6,6 @@ import java.util.Scanner;
 
 public class AgendaTelefonica {
 
-//    public static int slot = 0;
-
     //esse metodo inicia o programa
     public static void  main (String [] args) throws IOException {
         System.out.println("\n" +
@@ -68,6 +66,7 @@ public class AgendaTelefonica {
 
         System.out.println("Insira o nome: ");
         String novo = scan.next();
+        novo = novo.toUpperCase();
         gravarArq.println(novo);
 
         System.out.println("Insira o numero: ");
@@ -76,29 +75,32 @@ public class AgendaTelefonica {
 
         arq.close();
 
-        System.out.println("O contato " + novo + ", com o número " + novoNum + " foi salvo com sucesso!!"); //na posição " + (slot + 2) + "!");
+        System.out.println("O contato " + novo + ", com o número " + novoNum + " foi salvo com sucesso!!");
     }
 
     //Esse método busca um contato pelo slot, e exibe o contato
     public static void BuscaContato () throws IOException {
         FileReader arq;
         Scanner scan = new Scanner(System.in);
+        var nome = "";
+        var num = "";
 
-        System.out.println("Digite o slot do contato: ");
-        int linha = scan.nextInt();
+        System.out.println("Digite o nome do contato: ");
+        String busca = scan.nextLine();
+        busca = busca.toUpperCase();
 
         try {
-            int i = 1;
-            String nome = "missName";
-            String num;
             arq = new FileReader("e:\\lista.txt");
             BufferedReader lerArq = new BufferedReader(arq);
 
-            while (linha+1 != i) {
+            while (!busca.intern().equals(nome.intern())) {
                 nome = lerArq.readLine(); // lê até a linha especificada
-                i++;
+                num = lerArq.readLine(); // lê a linha seguinte, que na ordem, corresponde ao numero.
+                if (nome == null) {
+                    System.out.println("Não existe contato salvo com esse nome.");
+                    break;
+                }
             }
-            num = lerArq.readLine(); // continua a leitura de onde o while parou, lê a linha seguinte
 
             System.out.println(nome);
             System.out.println(num);
